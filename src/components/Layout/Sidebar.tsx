@@ -27,6 +27,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     { name: 'Codes', path: '/codes', icon: <FileCode size={20} /> },
     { name: 'Feedback', path: '/feedback', icon: <MessageSquare size={20} /> },
     { name: 'Contact Us', path: '/contact', icon: <Mail size={20} /> },
+    { name: 'Add category', path: '/AddCategory', icon: <Mail size={20} /> },
   ];
 
   // Add Notes menu item for admin users only

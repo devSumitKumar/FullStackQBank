@@ -17,6 +17,7 @@ const AddNotesPage = React.lazy(() => import('./pages/AddNotesPage'));
 const FeedbackPage = React.lazy(() => import('./pages/FeedbackPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const AddCategoryScreen = React.lazy(() => import('./pages/Category'));
 
 // Loading component for lazy-loaded routes
 const LazyLoadingComponent = () => (
@@ -98,6 +99,14 @@ export function App() {
               element={
                 <React.Suspense fallback={<LazyLoadingComponent />}>
                   <ContactPage />
+                </React.Suspense>
+              } 
+            />
+             <Route 
+              path="AddCategory" 
+              element={
+                <React.Suspense fallback={<LazyLoadingComponent />}>
+                  <AddCategoryScreen />
                 </React.Suspense>
               } 
             />
