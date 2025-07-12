@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import NoteCard from '../components/NoteCard';
-import SearchBar from '../components/SearchBar';
+import { RootState } from '../../store/store';
+import NoteCard from '../../components/NoteCard';
+import SearchBar from '../../components/SearchBar';
 
-export default function NodeJSPage() {
+export default function QuestionsPage() {
   const { notes } = useSelector((state: RootState) => state.notes);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const nodeJSNotes = useMemo(() => {
-    const filtered = notes.filter(note => note.category === 'nodejs');
+  const reactNotes = useMemo(() => {
+    const filtered = notes.filter(note => note.category === 'react');
     
     if (!searchTerm) return filtered;
     
@@ -21,24 +21,24 @@ export default function NodeJSPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">NodeJS Notes</h1>
+      <h1 className="text-3xl font-bold mb-6">React Notes</h1>
       
       <SearchBar 
         onSearch={setSearchTerm} 
-        placeholder="Search NodeJS notes..." 
+        placeholder="Search React notes..." 
       />
       
-      {nodeJSNotes.length === 0 ? (
+      {reactNotes.length === 0 ? (
         <div className="text-center py-10">
           {searchTerm ? (
-            <p className="text-gray-500 dark:text-gray-400">No NodeJS notes match your search.</p>
+            <p className="text-gray-500 dark:text-gray-400">No React notes match your search.</p>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400">No NodeJS notes found.</p>
+            <p className="text-gray-500 dark:text-gray-400">No React notes found.</p>
           )}
         </div>
       ) : (
         <div>
-          {nodeJSNotes.map(note => (
+          {reactNotes.map(note => (
             <NoteCard key={note.id} note={note} />
           ))}
         </div>

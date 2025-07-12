@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addNote } from '../store/slices/notesSlice';
-import { RootState } from '../store/store';
+import { addNote } from '../../store/slices/notesSlice';
+import { RootState } from '../../store/store';
 
 export default function AddNotesPage() {
   const [question, setQuestion] = useState('');

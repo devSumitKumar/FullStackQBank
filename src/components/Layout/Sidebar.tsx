@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Code, FileCode, House, Mail, MessageSquare, Pencil, Server, Smartphone, X } from 'lucide-react';
+import { Code, FileCode, House, Mail, MessageSquare, Pencil, Server, Smartphone} from 'lucide-react';
 import { RootState } from '../../store/store';
-
-interface SidebarProps {
-  isOpen: boolean;
-  toggleSidebar: () => void;
-}
+import { SidebarProps } from '../../types';
 
 export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

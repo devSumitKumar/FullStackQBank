@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import NoteCard from '../components/NoteCard';
-import SearchBar from '../components/SearchBar';
+import { RootState } from '../../store/store';
+import NoteCard from '../../components/NoteCard';
+import SearchBar from '../../components/SearchBar';
 
-export default function MobileAppPage() {
+export default function ReactPage() {
   const { notes } = useSelector((state: RootState) => state.notes);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const mobileAppNotes = useMemo(() => {
-    const filtered = notes.filter(note => note.category === 'mobileapp');
+  const reactNotes = useMemo(() => {
+    const filtered = notes.filter(note => note.category === 'react');
     
     if (!searchTerm) return filtered;
     
@@ -21,24 +21,24 @@ export default function MobileAppPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Mobile App Development Notes</h1>
+      <h1 className="text-3xl font-bold mb-6">React Notes</h1>
       
       <SearchBar 
         onSearch={setSearchTerm} 
-        placeholder="Search Mobile App notes..." 
+        placeholder="Search React notes..." 
       />
       
-      {mobileAppNotes.length === 0 ? (
+      {reactNotes.length === 0 ? (
         <div className="text-center py-10">
           {searchTerm ? (
-            <p className="text-gray-500 dark:text-gray-400">No Mobile App notes match your search.</p>
+            <p className="text-gray-500 dark:text-gray-400">No React notes match your search.</p>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400">No Mobile App notes found.</p>
+            <p className="text-gray-500 dark:text-gray-400">No React notes found.</p>
           )}
         </div>
       ) : (
         <div>
-          {mobileAppNotes.map(note => (
+          {reactNotes.map(note => (
             <NoteCard key={note.id} note={note} />
           ))}
         </div>

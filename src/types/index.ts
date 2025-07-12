@@ -20,3 +20,17 @@ export interface FeedbackData {
   message: string;
   createdAt: string;
 }
+
+export interface QuestionComponetProps {
+  categoryType: string;
+}
+
+export interface SidebarProps {
+  isOpen: boolean;
+  toggleSidebar: () => void;
+}
+
+export interface NavbarProps {
+  toggleSidebar: () => void;
+  sidebarOpen: boolean;
+}

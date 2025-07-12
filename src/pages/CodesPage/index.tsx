@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import NoteCard from '../components/NoteCard';
-import SearchBar from '../components/SearchBar';
+import { RootState } from '../../store/store';
+import NoteCard from '../../components/NoteCard';
+import SearchBar from '../../components/SearchBar';
 
 export default function CodesPage() {
   const { notes } = useSelector((state: RootState) => state.notes);

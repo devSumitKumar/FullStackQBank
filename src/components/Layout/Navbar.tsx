@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogIn, LogOut, Menu, Moon, Sun, User } from 'lucide-react';
+import { LogIn, LogOut, Menu, Moon, Sun } from 'lucide-react';
 import { toggleTheme } from '../../store/slices/themeSlice';
 import { logout } from '../../store/slices/authSlice';
 import { RootState } from '../../store/store';
 import AuthModal from '../Auth/AuthModal';
-
-interface NavbarProps {
-  toggleSidebar: () => void;
-  sidebarOpen: boolean;
-}
+import { NavbarProps } from '../../types';
 
 export default function Navbar({ toggleSidebar, sidebarOpen }: NavbarProps) {
   const [showAuthModal, setShowAuthModal] = useState(false);
