@@ -6,18 +6,18 @@ import MainLayout from './components/Layout/MainLayout';
 import HomePage from './pages/HomePage';
 import Toast from './components/UI/Toast';
 import './index.css';
+import * as XLSX from 'xlsx';
 
 // Lazy load other pages to keep initial bundle size smaller
 import React from 'react';
-const ReactPage = React.lazy(() => import('./pages/ReactPage'));
-const NodeJSPage = React.lazy(() => import('./pages/NodeJSPage'));
-const MobileAppPage = React.lazy(() => import('./pages/MobileAppPage'));
+const QuestionsPage = React.lazy(() => import('./pages/QuestionsPage'));
 const CodesPage = React.lazy(() => import('./pages/CodesPage'));
 const AddNotesPage = React.lazy(() => import('./pages/AddNotesPage'));
+const AddCategoryScreen = React.lazy(() => import('./pages/Category'));
 const FeedbackPage = React.lazy(() => import('./pages/FeedbackPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-const AddCategoryScreen = React.lazy(() => import('./pages/Category'));
+
 
 // Loading component for lazy-loaded routes
 const LazyLoadingComponent = () => (
@@ -27,13 +27,13 @@ const LazyLoadingComponent = () => (
 );
 
 export function App() {
+
   useEffect(() => {
     // Load Inter font
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
     link.rel = 'stylesheet';
     document.head.appendChild(link);
-
     return () => {
       document.head.removeChild(link);
     };
@@ -47,26 +47,10 @@ export function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route 
-              path="react" 
+              path="questions/:category" 
               element={
                 <React.Suspense fallback={<LazyLoadingComponent />}>
-                  <ReactPage />
-                </React.Suspense>
-              } 
-            />
-            <Route 
-              path="nodejs" 
-              element={
-                <React.Suspense fallback={<LazyLoadingComponent />}>
-                  <NodeJSPage />
-                </React.Suspense>
-              } 
-            />
-            <Route 
-              path="mobileapp" 
-              element={
-                <React.Suspense fallback={<LazyLoadingComponent />}>
-                  <MobileAppPage />
+                  <QuestionsPage />
                 </React.Suspense>
               } 
             />

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Code, FileCode, Mail, MessageSquare, Server, Smartphone } from 'lucide-react';
 import { RootState } from '../../store/store';
+import useGetCategoryList from '../../hooks/servicecalls/useGetCategoryList';
 
 interface TileProps {
   title: string;
@@ -45,46 +46,7 @@ const Tile = ({ title, description, icon, path }: TileProps) => {
 
 export default function HomePage() {
   const { darkMode } = useSelector((state: RootState) => state.theme);
-  
-  const tiles = [
-    {
-      title: 'React',
-      description: 'A JavaScript library for building user interfaces with reusable components.',
-      icon: <Code size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/react'
-    },
-    {
-      title: 'NodeJS',
-      description: 'A JavaScript runtime built on Chrome\'s V8 engine for server-side applications.',
-      icon: <Server size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/nodejs'
-    },
-    {
-      title: 'MobileApp',
-      description: 'Build native mobile applications using React Native and other frameworks.',
-      icon: <Smartphone size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/mobileapp'
-    },
-    {
-      title: 'Codes',
-      description: 'Snippets and examples for various programming challenges and solutions.',
-      icon: <FileCode size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/codes'
-    },
-    {
-      title: 'Feedback',
-      description: 'Share your thoughts and suggestions to help us improve our platform.',
-      icon: <MessageSquare size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/feedback'
-    },
-    {
-      title: 'Contact Us',
-      description: 'Get in touch with our team for support, partnerships, or general inquiries.',
-      icon: <Mail size={24} className={darkMode ? 'text-blue-400' : 'text-blue-600'} />,
-      path: '/contact'
-    }
-  ];
-
+  const { categoryListPath } = useGetCategoryList();
   return (
     <div>
       <div className="mb-8">
@@ -95,7 +57,7 @@ export default function HomePage() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tiles.map((tile) => (
+        {categoryListPath.map((tile) => (
           <Tile
             key={tile.title}
             title={tile.title}

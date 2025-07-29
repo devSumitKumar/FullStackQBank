@@ -1,50 +1,48 @@
-import React, { useState } from 'react';
-import { Plus,  Sparkles } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
- export default function AddCategoryScreen  ()  {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+import React, { useState } from "react";
+import { Plus, Sparkles } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
+export default function AddCategoryScreen() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const { darkMode } = useSelector((state: RootState) => state.theme);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title.trim() || !description.trim()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     // Simulate API call delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
     setShowSuccess(true);
-    
+
     // Reset form after success animation
     setTimeout(() => {
-      setTitle('');
-      setDescription('');
+      setTitle("");
+      setDescription("");
       setIsSubmitting(false);
       setShowSuccess(false);
     }, 2000);
   };
 
   const handleReset = () => {
-    setTitle('');
-    setDescription('');
+    setTitle("");
+    setDescription("");
     setShowSuccess(false);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative overflow-hidden">
- 
-
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-2xl">         
-
+        <div className="w-full max-w-2xl">
           {/* Form Card */}
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20 relative overflow-hidden">
             {/* Success overlay */}
@@ -55,7 +53,9 @@ import { RootState } from '../../store/store';
                     <Sparkles size={32} />
                   </div>
                   <h3 className="text-2xl font-bold mb-2">Category Created!</h3>
-                  <p className="text-emerald-100">Your new category has been added successfully.</p>
+                  <p className="text-emerald-100">
+                    Your new category has been added successfully.
+                  </p>
                 </div>
               </div>
             )}
@@ -67,7 +67,10 @@ import { RootState } from '../../store/store';
             <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="title" className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label
+                    htmlFor="title"
+                    className="block text-lg font-semibold text-gray-800 mb-3"
+                  >
                     Category Title
                   </label>
                   <div className="relative">
@@ -78,18 +81,22 @@ import { RootState } from '../../store/store';
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Enter a descriptive title..."
                       className={`w-full p-3 border rounded-md ${
-              darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
-            }`}
+                        darkMode
+                          ? "bg-gray-700 border-gray-600 text-white"
+                          : "bg-white border-gray-300"
+                      }`}
                       required
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/5 to-purple-500/5 pointer-events-none opacity-0 transition-opacity duration-300 peer-focus:opacity-100"></div>
                   </div>
                 </div>
-                
+
                 <div>
-                  
-                  <label htmlFor="description" className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label
+                    htmlFor="description"
+                    className="block text-lg font-semibold text-gray-800 mb-3"
+                  >
                     Description
                   </label>
                   <div className="relative">
@@ -100,19 +107,23 @@ import { RootState } from '../../store/store';
                       placeholder="Describe what this category will contain..."
                       rows={5}
                       className={`w-full p-3 border rounded-md min-h-[150px] ${
-              darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
-            }`}
+                        darkMode
+                          ? "bg-gray-700 border-gray-600 text-white"
+                          : "bg-white border-gray-300"
+                      }`}
                       required
                       disabled={isSubmitting}
                     />
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button
                   type="submit"
-                  disabled={isSubmitting || !title.trim() || !description.trim()}
+                  disabled={
+                    isSubmitting || !title.trim() || !description.trim()
+                  }
                   className="flex-1 group relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <div className="flex items-center justify-center gap-3">
@@ -123,14 +134,17 @@ import { RootState } from '../../store/store';
                       </>
                     ) : (
                       <>
-                        <Plus size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+                        <Plus
+                          size={20}
+                          className="group-hover:rotate-90 transition-transform duration-300"
+                        />
                         <span>Create Category</span>
                       </>
                     )}
                   </div>
                   <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={handleReset}
@@ -142,11 +156,8 @@ import { RootState } from '../../store/store';
               </div>
             </form>
           </div>
-
-        
         </div>
       </div>
     </div>
   );
-};
-
+}
