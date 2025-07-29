@@ -53,3 +53,19 @@ interface NotesState {
   status: string;
   error: string | null;
 }
+
+
+
+interface ICategorySate {
+  category: ICategory[];
+  status: string;
+  error: string | null;
+}
+
+interface IGenericResponseState {
+
+  response: string | null;
+  status: string;
+  error: string | null;
+  
+}

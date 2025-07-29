@@ -1,4 +1,4 @@
-import { ICategory } from "../../../../types";
+import { ICategory, ICategorySate } from "../../../../types";
 import { getCategoryApi } from "./getCategoryAPi";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -9,11 +9,6 @@ const initialState: ICategorySate = {
   error: null,
 };
 
-interface ICategorySate {
-  category: ICategory[];
-  status: string;
-  error: string | null;
-}
 
 
 

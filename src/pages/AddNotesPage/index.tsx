@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addNote } from "../../store/slices/notesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import useGetCategoryList from "../../hooks/servicecalls/useGetCategoryList";
+import useCategory from "../../hooks/servicecalls/useCategory";
 
 export default function AddNotesPage() {
-  const { categoryList } = useGetCategoryList();
+  const { categoryList } = useCategory();
   const dispatch = useDispatch<AppDispatch>();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
