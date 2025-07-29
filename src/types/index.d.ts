@@ -8,9 +8,9 @@ export interface Note {
   id: string;
   question: string;
   answer: string;
-  category: 'react' | 'nodejs' | 'mobileapp' | 'code';
+  category?: string;
   code?: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface FeedbackData {
@@ -33,4 +33,23 @@ export interface SidebarProps {
 export interface NavbarProps {
   toggleSidebar: () => void;
   sidebarOpen: boolean;
+}
+
+export interface ICategory {
+  id: string ;
+  category: string ;
+  description: string ;
+}
+
+export interface ICategoryPaths {
+  title: string ;
+  description: string ;
+  icon: any ;
+  path: string ;
+}
+
+interface NotesState {
+  notes: Note[];
+  status: string;
+  error: string | null;
 }
