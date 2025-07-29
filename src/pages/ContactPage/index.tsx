@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Github, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
 
 export default function ContactPage() {
   const { darkMode } = useSelector((state: RootState) => state.theme);

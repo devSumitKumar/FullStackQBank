@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Code, FileCode, House, Mail, MessageSquare, Pencil, Server, Smartphone, X } from 'lucide-react';
+import { Code, FileCode, House, Mail, MessageSquare, Pencil, Server, Smartphone} from 'lucide-react';
 import { RootState } from '../../store/store';
-
-interface SidebarProps {
-  isOpen: boolean;
-  toggleSidebar: () => void;
-}
+import { SidebarProps } from '../../types';
 
 export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -31,6 +27,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     { name: 'Codes', path: '/codes', icon: <FileCode size={20} /> },
     { name: 'Feedback', path: '/feedback', icon: <MessageSquare size={20} /> },
     { name: 'Contact Us', path: '/contact', icon: <Mail size={20} /> },
+    { name: 'Add category', path: '/AddCategory', icon: <Mail size={20} /> },
   ];
 
   // Add Notes menu item for admin users only
