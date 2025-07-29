@@ -4,8 +4,9 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { getCategoryApi } from "../../store/slices/category/getCategory/getCategoryAPi";
 import { ICategory, ICategoryPaths } from "../../types";
 import { Code, FileCode, House, Mail, Server, Smartphone } from "lucide-react";
+import { addCategoryApi } from "../../store/slices/category/addCategory/addCategoryApi";
 
-export default function useGetCategoryList() {
+export default function useCategory() {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   );
@@ -125,5 +126,22 @@ export default function useGetCategoryList() {
     }
   };
 
-  return { categoryList, categoryListPath, menuItems };
+
+  const addNewCategory = async (categoryTitle: string, description : string) => {
+
+    try {
+      const category: ICategory = {
+        id: new Date().toISOString(),
+        category: categoryTitle,
+        description: description,
+      };
+      await dispatch(addCategoryApi(category)).unwrap();
+    } catch (error) {
+      console.error("Failed to add new category:", error);
+
+    }
+
+  };
+
+  return { categoryList, categoryListPath, menuItems, addNewCategory };
 }

@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { SidebarProps } from "../../types";
-import useGetCategoryList from "../../hooks/servicecalls/useGetCategoryList";
+import useCategory from "../../hooks/servicecalls/useCategory";
 
 export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { darkMode } = useSelector((state: RootState) => state.theme);
-  const { menuItems } = useGetCategoryList();
+  const { menuItems } = useCategory();
   
   useEffect(() => {
     const handleResize = () => {

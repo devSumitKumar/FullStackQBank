@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Plus, Sparkles } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import useCategory from "../../hooks/servicecalls/useCategory";
 
 export default function AddCategoryScreen() {
   const [title, setTitle] = useState("");
@@ -9,13 +10,16 @@ export default function AddCategoryScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const { darkMode } = useSelector((state: RootState) => state.theme);
-
+  const { addNewCategory } = useCategory();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    //add validation and show toast msg 
     if (!title.trim() || !description.trim()) {
       return;
     }
+
+    addNewCategory(title, description);
+
 
     setIsSubmitting(true);
 
@@ -80,11 +84,10 @@ export default function AddCategoryScreen() {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Enter a descriptive title..."
-                      className={`w-full p-3 border rounded-md ${
-                        darkMode
+                      className={`w-full p-3 border rounded-md ${darkMode
                           ? "bg-gray-700 border-gray-600 text-white"
                           : "bg-white border-gray-300"
-                      }`}
+                        }`}
                       required
                       disabled={isSubmitting}
                     />
@@ -106,11 +109,10 @@ export default function AddCategoryScreen() {
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Describe what this category will contain..."
                       rows={5}
-                      className={`w-full p-3 border rounded-md min-h-[150px] ${
-                        darkMode
+                      className={`w-full p-3 border rounded-md min-h-[150px] ${darkMode
                           ? "bg-gray-700 border-gray-600 text-white"
                           : "bg-white border-gray-300"
-                      }`}
+                        }`}
                       required
                       disabled={isSubmitting}
                     />

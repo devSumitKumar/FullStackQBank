@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Code, FileCode, Mail, MessageSquare, Server, Smartphone } from 'lucide-react';
 import { RootState } from '../../store/store';
-import useGetCategoryList from '../../hooks/servicecalls/useGetCategoryList';
+import useCategory from '../../hooks/servicecalls/useCategory';
 
 interface TileProps {
   title: string;
@@ -46,7 +46,7 @@ const Tile = ({ title, description, icon, path }: TileProps) => {
 
 export default function HomePage() {
   const { darkMode } = useSelector((state: RootState) => state.theme);
-  const { categoryListPath } = useGetCategoryList();
+  const { categoryListPath } = useCategory();
   return (
     <div>
       <div className="mb-8">
