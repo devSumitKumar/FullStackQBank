@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
 import { getCategoryApi } from "../../store/slices/category/getCategory/getCategoryAPi";
-import { ICategory, ICategoryPaths } from "../../types";
+import { IAddCategoryReq, ICategory, ICategoryPaths } from "../../types";
 import { Code, FileCode, House, Mail, Server, Smartphone } from "lucide-react";
 import { addCategoryApi } from "../../store/slices/category/addCategory/addCategoryApi";
 
@@ -19,7 +19,7 @@ export default function useCategory() {
   const { darkMode } = useSelector((state: RootState) => state.theme);
   const categoryState = useSelector((state: RootState) => state.category);
 
-  type CategoryKey = "JavaScript" | "React" | "NodeJS" | "DSA";
+  type CategoryKey = "JavaScript" | "ReactJS" | "NodeJS" | "DSA";
 
   const categoryConfig: Record<CategoryKey, { icon: any }> = {
     JavaScript: {
@@ -30,7 +30,7 @@ export default function useCategory() {
         />
       ),
     },
-    React: {
+    ReactJS: {
       icon: (
         <Code
           size={24}
@@ -83,12 +83,12 @@ export default function useCategory() {
       setCategoryList(response);
       const categoryItems = response.map((item) => {
         const config =
-          categoryConfig[item.category as CategoryKey] ?? defaultConfig;
+          categoryConfig[item.categoryType as CategoryKey] ?? defaultConfig;
         return {
-          title: item.category,
+          title: item.categoryType,
           description: item.description,
           icon: config.icon,
-          path: `/questions/${item.category}`,
+          path: `/questions/${item.categoryType}`,
         } as ICategoryPaths;
       });
       setCategoryListPath(categoryItems);
@@ -100,12 +100,9 @@ export default function useCategory() {
           description: "",
         },
         ...categoryItems,
-      ];
-
-      const adminMenuItems = [
         {
           title: "Add Qs",
-          path: "/add-notes",
+          path: "/addnotes",
           icon: <Mail size={20} />,
           description: "",
         },
@@ -116,10 +113,29 @@ export default function useCategory() {
           description: "",
         },
       ];
+
+      const adminMenuItems = [
+        {
+          title: "Add Qs",
+          path: "/addnotes",
+          icon: <Mail size={20} />,
+          description: "",
+        },
+        {
+          title: "Add category",
+          path: "/AddCategory",
+          icon: <Mail size={20} />,
+          description: "",
+        },
+      ];
+      // const finalMenuItems =
+      //   isAuthenticated && user?.isAdmin
+      //     ? [...nonAdminMenuItems, ...adminMenuItems]
+      //     : nonAdminMenuItems;
       const finalMenuItems =
-        isAuthenticated && user?.isAdmin
-          ? [...nonAdminMenuItems, ...adminMenuItems]
-          : nonAdminMenuItems;
+        
+           [...nonAdminMenuItems]
+          
       setMenuItems(finalMenuItems);
     } catch (error) {
       console.error("Failed to fetch category list:", error);
@@ -130,9 +146,8 @@ export default function useCategory() {
   const addNewCategory = async (categoryTitle: string, description : string) => {
 
     try {
-      const category: ICategory = {
-        id: new Date().toISOString(),
-        category: categoryTitle,
+      const category: IAddCategoryReq = {
+        categoryType: categoryTitle,
         description: description,
       };
       await dispatch(addCategoryApi(category)).unwrap();

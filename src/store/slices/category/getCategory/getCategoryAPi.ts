@@ -1,20 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import * as XLSX from "xlsx";
+import axiosInstance from "../../../../apiClient/axiosInstance";
+
 
 export const getCategoryApi = createAsyncThunk(
-  "category/getCategoryApi",
+  "category/getCategoryList",
   async () => {
     try {
-      const response = await fetch("/mockdata/masterdata.xlsx");
-      const arrayBuffer = await response.arrayBuffer();
-      const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
-      const worksheet = workbook.Sheets["Category"];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+      const response = await axiosInstance().get("category/getCategoryList");
+      //handle successs and failure here and sedn the response to the reducer
+      return response.data.data;
 
-      return jsonData;
     } catch (error) {
       return error;
     }
-  }
-);
-
+  });

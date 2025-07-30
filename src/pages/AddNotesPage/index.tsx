@@ -4,29 +4,37 @@ import { useNavigate } from "react-router-dom";
 import { addNote } from "../../store/slices/notesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import useCategory from "../../hooks/servicecalls/useCategory";
+import { set } from "react-hook-form";
 
 export default function AddNotesPage() {
   const { categoryList } = useCategory();
   const dispatch = useDispatch<AppDispatch>();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [category, setCategory] = useState<
-    "react" | "nodejs" | "mobileapp" | "code"
-  >("react");
+//
+  const [category, setCategory] = useState
+    (
+      categoryList.length > 0 ? categoryList[0].categoryType : ""
+    );
+
+  const [categoryId, setCategoryId] = useState
+    (
+      categoryList.length > 0 ? categoryList[0].categoryId : ""
+    );
   const [code, setCode] = useState("");
   const [formError, setFormError] = useState("");
 
   const navigate = useNavigate();
   const { darkMode } = useSelector((state: RootState) => state.theme);
-  const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth
-  );
+  // const { isAuthenticated, user } = useSelector(
+  //   (state: RootState) => state.auth
+  // );
 
   // Redirect if not admin
-  if (!isAuthenticated || !user?.isAdmin) {
-    navigate("/");
-    return null;
-  }
+  // if (!isAuthenticated || !user?.isAdmin) {
+  //   navigate("/");
+  //   return null;
+  // }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,16 +49,22 @@ export default function AddNotesPage() {
       return;
     }
 
-    const newNote = {
-      id: Date.now().toString(),
-      question,
-      answer,
-      category,
-      code: category === "code" ? code : undefined,
-      createdAt: new Date().toISOString(),
-    };
+    const newQ = {
+      categoryId: categoryId ,
+      question: question,
+      answer: answer
+    }
 
-    dispatch(addNote(newNote));
+    // const newNote = {
+    //   id: Date.now().toString(),
+    //   question,
+    //   answer,
+    //   category,
+    //   code: category === "code" ? code : undefined,
+    //   createdAt: new Date().toISOString(),
+    // };
+
+    // dispatch(addNote(newNote));
 
     // Reset form
     setQuestion("");
@@ -61,6 +75,10 @@ export default function AddNotesPage() {
 
     // Navigate to the appropriate page
     navigate(`/${category}`);
+  };
+
+  const handleDropDownSelection = (event: any) => {
+    setCategoryId(event.target.value);
   };
 
   return (
@@ -79,16 +97,15 @@ export default function AddNotesPage() {
           {/* add custom array which fetched from api to show dynamic category */}
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value as any)}
-            className={`w-full p-3 border rounded-md ${
-              darkMode
-                ? "bg-gray-700 border-gray-600 text-white"
-                : "bg-white border-gray-300"
-            }`}
+            onChange={(e) => handleDropDownSelection(e)}
+            className={`w-full p-3 border rounded-md ${darkMode
+              ? "bg-gray-700 border-gray-600 text-white"
+              : "bg-white border-gray-300"
+              }`}
           >
             {categoryList.map((cat) => (
-              <option key={cat.category} value={cat.category}>
-                {cat.category}
+              <option key={cat.categoryId} value={cat.categoryId}>
+                {cat.categoryType}
               </option>
             ))}
           </select>
@@ -100,11 +117,10 @@ export default function AddNotesPage() {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            className={`w-full p-3 border rounded-md ${
-              darkMode
-                ? "bg-gray-700 border-gray-600 text-white"
-                : "bg-white border-gray-300"
-            }`}
+            className={`w-full p-3 border rounded-md ${darkMode
+              ? "bg-gray-700 border-gray-600 text-white"
+              : "bg-white border-gray-300"
+              }`}
             placeholder="Enter your question"
           />
         </div>
@@ -114,11 +130,10 @@ export default function AddNotesPage() {
           <textarea
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
-            className={`w-full p-3 border rounded-md min-h-[150px] ${
-              darkMode
-                ? "bg-gray-700 border-gray-600 text-white"
-                : "bg-white border-gray-300"
-            }`}
+            className={`w-full p-3 border rounded-md min-h-[150px] ${darkMode
+              ? "bg-gray-700 border-gray-600 text-white"
+              : "bg-white border-gray-300"
+              }`}
             placeholder="Enter your answer"
           />
         </div>
@@ -131,11 +146,10 @@ export default function AddNotesPage() {
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className={`w-full p-3 border rounded-md font-mono min-h-[200px] ${
-                darkMode
-                  ? "bg-gray-700 border-gray-600 text-white"
-                  : "bg-white border-gray-300"
-              }`}
+              className={`w-full p-3 border rounded-md font-mono min-h-[200px] ${darkMode
+                ? "bg-gray-700 border-gray-600 text-white"
+                : "bg-white border-gray-300"
+                }`}
               placeholder="// Enter your code here"
             />
           </div>
@@ -144,11 +158,10 @@ export default function AddNotesPage() {
         <div className="mt-6">
           <button
             type="submit"
-            className={`px-6 py-3 rounded-md transition-colors ${
-              darkMode
-                ? "bg-blue-700 hover:bg-blue-600 text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
-            }`}
+            className={`px-6 py-3 rounded-md transition-colors ${darkMode
+              ? "bg-blue-700 hover:bg-blue-600 text-white"
+              : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
           >
             Add Note
           </button>

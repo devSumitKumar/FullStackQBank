@@ -11,7 +11,7 @@ const initialState: IGenericResponseState = {
 
 
 const getCategorySlice = createSlice({
-    name: 'getCategory',
+    name: 'addCategory',
     initialState,
     reducers: {
 

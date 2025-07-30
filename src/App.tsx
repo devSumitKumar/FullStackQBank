@@ -6,7 +6,6 @@ import MainLayout from './components/Layout/MainLayout';
 import HomePage from './pages/HomePage';
 import Toast from './components/UI/Toast';
 import './index.css';
-import * as XLSX from 'xlsx';
 
 // Lazy load other pages to keep initial bundle size smaller
 import React from 'react';
@@ -63,7 +62,7 @@ export function App() {
               } 
             />
             <Route 
-              path="add-notes" 
+              path="addnotes" 
               element={
                 <React.Suspense fallback={<LazyLoadingComponent />}>
                   <AddNotesPage />

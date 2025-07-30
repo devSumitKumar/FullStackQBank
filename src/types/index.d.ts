@@ -36,9 +36,10 @@ export interface NavbarProps {
 }
 
 export interface ICategory {
-  id: string ;
-  category: string ;
+  categoryId: string ;
+  categoryType: string ;
   description: string ;
+  _id: string ;
 }
 
 export interface ICategoryPaths {
@@ -68,4 +69,9 @@ interface IGenericResponseState {
   status: string;
   error: string | null;
   
+}
+
+export interface IAddCategoryReq {
+  categoryType: string ;
+  description: string ;
 }
