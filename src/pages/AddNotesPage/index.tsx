@@ -6,9 +6,11 @@ import { AppDispatch, RootState } from "../../store/store";
 import useCategory from "../../hooks/servicecalls/useCategory";
 import { set } from "react-hook-form";
 
+
 export default function AddNotesPage() {
   const { categoryList } = useCategory();
   const dispatch = useDispatch<AppDispatch>();
+  const isLoading = useSelector((state: RootState) => state.loader.loading);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 //
@@ -103,7 +105,14 @@ export default function AddNotesPage() {
               : "bg-white border-gray-300"
               }`}
           >
-            {categoryList.map((cat) => (
+            {
+              /*
+              Add loader here
+              */
+            }
+            {isLoading && <p>Loading...</p>}
+            
+            {!isLoading && categoryList.map((cat) => (
               <option key={cat.categoryId} value={cat.categoryId}>
                 {cat.categoryType}
               </option>

@@ -5,6 +5,7 @@ import { getCategoryApi } from "../../store/slices/category/getCategory/getCateg
 import { IAddCategoryReq, ICategory, ICategoryPaths } from "../../types";
 import { Code, FileCode, House, Mail, Server, Smartphone } from "lucide-react";
 import { addCategoryApi } from "../../store/slices/category/addCategory/addCategoryApi";
+import { showLoading, hideLoading } from "../../store/slices/loaderSlice";
 
 export default function useCategory() {
   const { isAuthenticated, user } = useSelector(
@@ -69,9 +70,12 @@ export default function useCategory() {
     fetchCategoryList();
   }, [dispatch, isAuthenticated, user]);
 
+  // Add loader here
   const fetchCategoryList = async () => {
     let response = [] as ICategory[];
+    
     try {
+      dispatch(showLoading())
       if (categoryState.category.length > 0) {
         console.log("Using cached category list");
         response = categoryState.category;
@@ -139,6 +143,8 @@ export default function useCategory() {
       setMenuItems(finalMenuItems);
     } catch (error) {
       console.error("Failed to fetch category list:", error);
+    } finally {
+      dispatch(hideLoading())
     }
   };
 
