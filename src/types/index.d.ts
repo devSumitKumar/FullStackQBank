@@ -42,6 +42,10 @@ export interface ICategory {
   _id: string ;
 }
 
+export interface GLoader {
+  loading: boolean;
+}
+
 export interface ICategoryPaths {
   title: string ;
   description: string ;

@@ -4,6 +4,7 @@ import notesReducer from './slices/notesSlice';
 import themeReducer from './slices/themeSlice';
 import categoryReducer from './slices/category/getCategory/getCategorySlice';
 import  getQnAListReducer  from './slices/qna/getQnAlist/getQnAListSlice';
+import loader from './slices/loaderSlice';
 
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
     notes: notesReducer,
     theme: themeReducer,
     category : categoryReducer,
-    questions: getQnAListReducer  
+    questions: getQnAListReducer,
+    loader: loader  
   }
 });
 
