@@ -9,6 +9,7 @@ import './index.css';
 
 // Lazy load other pages to keep initial bundle size smaller
 import React from 'react';
+import GlobalLoader from './components/UI/loader/GlobalLoader';
 const QuestionsPage = React.lazy(() => import('./pages/QuestionsPage'));
 const CodesPage = React.lazy(() => import('./pages/CodesPage'));
 const AddNotesPage = React.lazy(() => import('./pages/AddNotesPage'));
@@ -41,6 +42,7 @@ export function App() {
   return (
     <Provider store={store}>
       <Toast />
+      <GlobalLoader/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>

@@ -38,10 +38,10 @@ export default function AuthModal({ onClose }: AuthModalProps) {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  
-  const { 
-    register, 
-    handleSubmit, 
+
+  const {
+    register,
+    handleSubmit,
     formState: { errors },
     watch,
     reset
@@ -49,19 +49,23 @@ export default function AuthModal({ onClose }: AuthModalProps) {
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
-    
+
     try {
       if (activeTab === 'login') {
         // Simulate failed login for specific test case
         const shouldFail = data.username.toLowerCase() === 'fail';
-        
+
         if (shouldFail) {
           throw new Error('Invalid credentials');
         }
-        
-        const user = await simulateApiCall(data);
-        dispatch(loginSuccess(user));
-        toast.success(`Welcome back, ${user.username}!`);
+
+        const loginRe = {
+          username: data.username,
+          password: data.password
+        };
+        //pass this params in login API 
+        //dispatch(loginSuccess(user));
+        toast.success(`Welcome back, ${data.username}!`);
         onClose();
       } else {
         // Signup validation
@@ -70,16 +74,24 @@ export default function AuthModal({ onClose }: AuthModalProps) {
           setIsLoading(false);
           return;
         }
-        
-        const user = await simulateApiCall(data);
-        dispatch(signupSuccess(user));
+
+        const signUpReq = {
+          username: "",
+          emailid: "",
+          password: "",
+          terms: "",
+          specialCode: ""
+        };
+//pass this req in signup API 
+        //const user = await simulateApiCall(data);
+        //dispatch(signupSuccess(user));
         toast.success('Account created successfully!');
         onClose();
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
       toast.error(errorMessage);
-      
+
       if (activeTab === 'login') {
         dispatch(loginFailure(errorMessage));
       } else {
@@ -102,7 +114,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
           <h2 className="text-xl font-semibold dark:text-white">
             {activeTab === 'login' ? 'Login to Your Account' : 'Create New Account'}
           </h2>
-          <button 
+          <button
             onClick={onClose}
             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
             disabled={isLoading}
@@ -110,32 +122,30 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <X size={20} />
           </button>
         </div>
-        
+
         <div className="flex border-b dark:border-gray-700">
           <button
-            className={`flex-1 py-3 font-medium ${
-              activeTab === 'login' 
-                ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400' 
-                : 'text-gray-500 dark:text-gray-400'
-            }`}
+            className={`flex-1 py-3 font-medium ${activeTab === 'login'
+              ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+              : 'text-gray-500 dark:text-gray-400'
+              }`}
             onClick={() => handleTabChange('login')}
             disabled={isLoading}
           >
             Login
           </button>
           <button
-            className={`flex-1 py-3 font-medium ${
-              activeTab === 'signup' 
-                ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400' 
-                : 'text-gray-500 dark:text-gray-400'
-            }`}
+            className={`flex-1 py-3 font-medium ${activeTab === 'signup'
+              ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+              : 'text-gray-500 dark:text-gray-400'
+              }`}
             onClick={() => handleTabChange('signup')}
             disabled={isLoading}
           >
             Sign Up
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -144,14 +154,14 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <input
               type="text"
               className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
-              {...register('username', { 
+              {...register('username', {
                 required: 'Username is required',
                 minLength: {
                   value: 3,
                   message: 'Username must be at least 3 characters'
                 }
               })}
-                  style={{ color: 'blue' }} 
+              style={{ color: 'blue' }}
               disabled={isLoading}
             />
             {errors.username && (
@@ -163,7 +173,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
               </p>
             )}
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Password
@@ -171,21 +181,21 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <input
               type="password"
               className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
-              {...register('password', { 
+              {...register('password', {
                 required: 'Password is required',
                 minLength: {
                   value: 6,
                   message: 'Password must be at least 6 characters'
                 }
               })}
-              style={{ color: 'blue' }} 
+              style={{ color: 'blue' }}
               disabled={isLoading}
             />
             {errors.password && (
               <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
             )}
           </div>
-          
+
           {activeTab === 'signup' && (
             <>
               <div>
@@ -195,18 +205,18 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                 <input
                   type="password"
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
-                  {...register('confirmPassword', { 
+                  {...register('confirmPassword', {
                     required: 'Please confirm your password',
                     validate: value => value === watch('password') || 'Passwords do not match'
                   })}
                   disabled={isLoading}
-                      style={{ color: 'blue' }} 
+                  style={{ color: 'blue' }}
                 />
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
                 )}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Special Code (Optional)
@@ -216,7 +226,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
                   {...register('specialCode')}
                   disabled={isLoading}
-                      style={{ color: 'blue' }} 
+                  style={{ color: 'blue' }}
                 />
                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                   Use "ADMIN123" for admin access in this demo
@@ -224,7 +234,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
               </div>
             </>
           )}
-          
+
           {activeTab === 'login' && (
             <div className="flex items-center">
               <input
@@ -233,14 +243,14 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                 className="h-4 w-4 text-blue-600 rounded"
                 {...register('rememberMe')}
                 disabled={isLoading}
-                    style={{ color: 'blue' }} 
+                style={{ color: 'blue' }}
               />
               <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                 Remember me
               </label>
             </div>
           )}
-          
+
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow transition duration-200 flex items-center justify-center"
