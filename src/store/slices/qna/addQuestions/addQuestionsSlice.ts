@@ -1,5 +1,5 @@
 import { IGenericResponseState } from "../../../../types";
-import { addCategoryApi } from "./addCategoryApi";
+import { addQuestionsAPI } from "./addQuestionsAPI";
 import { createSlice } from "@reduxjs/toolkit";
 
 
@@ -10,8 +10,8 @@ const initialState: IGenericResponseState = {
 };
 
 
-const addCategorySlice = createSlice({
-    name: 'addCategory',
+const addQuestionsSlice = createSlice({
+    name: 'addQuestions',
     initialState,
     reducers: {
 
@@ -19,19 +19,19 @@ const addCategorySlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(addCategoryApi.pending, (state) => {
+            .addCase(addQuestionsAPI.pending, (state) => {
                 state.status = "pending";
                 state.error = null;
             })
-            .addCase(addCategoryApi.fulfilled, (state, action) => {
+            .addCase(addQuestionsAPI.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.response = action.payload as string;
             })
-            .addCase(addCategoryApi.rejected, (state, action) => {
+            .addCase(addQuestionsAPI.rejected, (state, action) => {
                 state.status = "rejected";
                 state.error = action.payload as string;
             });
     }
 });
 
-export default addCategorySlice.reducer;
+export default addQuestionsSlice.reducer;

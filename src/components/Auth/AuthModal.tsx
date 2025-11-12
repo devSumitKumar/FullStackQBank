@@ -151,6 +151,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                   message: 'Username must be at least 3 characters'
                 }
               })}
+                  style={{ color: 'blue' }} 
               disabled={isLoading}
             />
             {errors.username && (
@@ -177,6 +178,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                   message: 'Password must be at least 6 characters'
                 }
               })}
+              style={{ color: 'blue' }} 
               disabled={isLoading}
             />
             {errors.password && (
@@ -198,6 +200,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                     validate: value => value === watch('password') || 'Passwords do not match'
                   })}
                   disabled={isLoading}
+                      style={{ color: 'blue' }} 
                 />
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
@@ -213,6 +216,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                   className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
                   {...register('specialCode')}
                   disabled={isLoading}
+                      style={{ color: 'blue' }} 
                 />
                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                   Use "ADMIN123" for admin access in this demo
@@ -229,6 +233,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                 className="h-4 w-4 text-blue-600 rounded"
                 {...register('rememberMe')}
                 disabled={isLoading}
+                    style={{ color: 'blue' }} 
               />
               <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                 Remember me

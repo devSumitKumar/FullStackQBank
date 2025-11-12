@@ -79,3 +79,34 @@ export interface IAddCategoryReq {
   categoryType: string ;
   description: string ;
 }
+
+export interface IAddQuesReq {
+  categoryType: string ;
+  description: string ;
+}
+
+export interface registerUserReuestType {
+  username: string;
+  emailid: string;
+  password: string;
+  terms: boolean;
+  specialCode: string;
+}
+
+export interface loginUserReuestType {
+  username: string;
+  password: string;
+}
+
+export interface saveQuestionReuestType {
+  categoryId: number;
+  question: string;
+  answer: string;
+};
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}

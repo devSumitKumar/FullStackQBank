@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Code, FileCode, Mail, MessageSquare, Server, Smartphone } from 'lucide-react';
 import { RootState } from '../../store/store';
 import useCategory from '../../hooks/servicecalls/useCategory';
 
